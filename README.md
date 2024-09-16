@@ -9,3 +9,7 @@ This is a maze game where a little boy as a main character will roaming around t
 4. After opening the game page, you have choice either to start new game or quit the game. You can select them by pressing enter.
 5. As soon as you start the game, you can navigate the main character using the arrow key.
 6. Have fun!
+
+Project that was done in team of 4
+
+CMPT276 Spring 2024 
