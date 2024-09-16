@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pathfinding.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Documents</a> &gt; <a href="index.source.html" class="el_package">Documents.SearchAI</a> &gt; <span class="el_source">Pathfinding.java</span></div><h1>Pathfinding.java</h1><pre class="source lang-java linenums">package Documents.SearchAI;
+
+import Documents.main.GamePanel;
+import java.util.ArrayList;
+
+/** 
+ * Implements pathfinding method using grid based map
+ * The class uses A* search algorithm to determine the shortest path
+ * from start node to goal node in 2 dimensional gird.
+ * */
+
+public class Pathfinding {
+    GamePanel gp;
+    Node[][] node;
+<span class="fc" id="L15">    ArrayList&lt;Node&gt; openList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L16">    public ArrayList&lt;Node&gt; pathList = new ArrayList&lt;&gt;();</span>
+    Node startNode, goalNode, currentNode;
+<span class="fc" id="L18">    boolean goalReached = false;</span>
+<span class="fc" id="L19">    int step = 0;</span>
+
+    /** 
+     * Constructs pathfinding object associated with gamepanel
+     * @param gp the game panel which the pathfinding is asscoiated with
+     *           it is used to access the game's tile amp and setting
+     * */
+<span class="fc" id="L26">    public Pathfinding(GamePanel gp) {</span>
+<span class="fc" id="L27">        this.gp = gp;</span>
+<span class="fc" id="L28">        instantiateNodes(); //potential error #1</span>
+<span class="fc" id="L29">    }</span>
+
+    /** 
+     * instantiates the grid of nodes that will be utilized for pathfinding
+     * */
+    public void instantiateNodes() {
+<span class="fc" id="L35">        node = new Node[gp.maxWCol][gp.maxWRow];</span>
+
+<span class="fc" id="L37">        int column = 0;</span>
+<span class="fc" id="L38">        int row = 0;</span>
+
+<span class="pc bpc" id="L40" title="1 of 4 branches missed.">        while(column &lt; gp.maxWCol &amp;&amp; row &lt; gp.maxWRow) {</span>
+<span class="fc" id="L41">            node[column][row] = new Node(column, row);</span>
+
+<span class="fc" id="L43">            column++;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            if (column == gp.maxWCol) {</span>
+<span class="fc" id="L45">                column = 0;</span>
+<span class="fc" id="L46">                row++;</span>
+            }
+        }
+<span class="fc" id="L49">    }</span>
+
+    /** 
+     * resetting the state of all nodoes to their initial state
+     * */
+    public void resetNodes() {
+<span class="fc" id="L55">        resetNodeStates();</span>
+<span class="fc" id="L56">    }</span>
+
+    /** 
+     * resets the nodes in the grid
+     * */
+    private void resetNodeStates() {
+<span class="fc" id="L62">        int column = 0;</span>
+<span class="fc" id="L63">        int row = 0;</span>
+
+<span class="pc bpc" id="L65" title="1 of 4 branches missed.">        while (column &lt; gp.maxWCol &amp;&amp; row &lt; gp.maxWRow) {</span>
+            // Reset open, checked and solid state
+<span class="fc" id="L67">            node[column][row].open = false;</span>
+<span class="fc" id="L68">            node[column][row].checked = false;</span>
+<span class="fc" id="L69">            node[column][row].solid = false;</span>
+
+<span class="fc" id="L71">            column++;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if (column == gp.maxWCol) {</span>
+<span class="fc" id="L73">                column = 0;</span>
+<span class="fc" id="L74">                row++;</span>
+            }
+        }
+<span class="fc" id="L77">        resetSearchSettings();</span>
+<span class="fc" id="L78">    }</span>
+
+    /** 
+     * resets the setting used for the search process
+     * */
+    private void resetSearchSettings() {
+<span class="fc" id="L84">        openList.clear();</span>
+<span class="fc" id="L85">        pathList.clear();</span>
+<span class="fc" id="L86">        goalReached = false;</span>
+<span class="fc" id="L87">        step = 0;</span>
+<span class="fc" id="L88">    }</span>
+
+    /** 
+     * initialize the start and goal node and sets the grid state for the pathfinding
+     * 
+     * @param startCol is the column index of the start node
+     * @param startRow is the row index of the start node
+     * @param goalCol is the column index of the goal node
+     * @param goalRow is the row index of the goal node
+     * */
+    public void setNode(int startCol, int startRow, int goalCol, int goalRow) {
+<span class="fc" id="L99">        resetNodes();</span>
+<span class="fc" id="L100">        initializeStartAndGoalNodes(startCol, startRow, goalCol, goalRow);</span>
+<span class="fc" id="L101">        initializeNodeStates();</span>
+<span class="fc" id="L102">    }</span>
+
+    /** 
+     * initializes the satrt and goal based on provided indices
+     * @param startCol is the column index of the start node
+     * @param startRow is the row index of the start node
+     * @param goalCol is the column index of the goal node
+     * @param goalRow is the row index of the goal node
+     * */
+    public void initializeStartAndGoalNodes(int startCol, int startRow, int goalCol, int goalRow) {
+        // Set Start and Goal node
+<span class="fc" id="L113">        startNode = node[startCol][startRow];</span>
+<span class="fc" id="L114">        currentNode = startNode;</span>
+<span class="fc" id="L115">        goalNode = node[goalCol][goalRow];</span>
+<span class="fc" id="L116">        openList.add(currentNode);</span>
+<span class="fc" id="L117">    }</span>
+
+
+
+    /** 
+     * Initializes the state of each node based on the game panel's tile map
+     * setting nodes as solid if they are not passable
+     * */
+    public void initializeNodeStates() {
+<span class="fc" id="L126">        int column = 0;</span>
+<span class="fc" id="L127">        int row = 0;</span>
+
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">        while (column &lt; gp.maxWCol &amp;&amp; row &lt; gp.maxWRow) {</span>
+
+<span class="fc" id="L131">            int tileNum = gp.tileFactory.tileMapNum[column][row];</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            if (gp.tileFactory.getTile(tileNum).collision == true) {</span>
+<span class="fc" id="L133">                node[column][row].solid = true;</span>
+            }
+
+<span class="fc" id="L136">            getCost(node[column][row]);</span>
+
+<span class="fc" id="L138">            column++;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            if (column == gp.maxWCol) {</span>
+<span class="fc" id="L140">                column = 0;</span>
+<span class="fc" id="L141">                row++;</span>
+            }
+<span class="fc" id="L143">        }</span>
+<span class="fc" id="L144">    }</span>
+
+    /** 
+     * calculates the cost for moving to specific node from start node and the estimated
+     * cost from that node to the goal node
+     * 
+     * @param node is the node for which costs are calculated
+     * */
+    public void getCost(Node node) {
+
+        //G cost
+<span class="fc" id="L155">        int sum = 0;</span>
+<span class="fc" id="L156">        int difference = 0;</span>
+<span class="fc" id="L157">        int xDist = Math.abs(node.column - startNode.column);</span>
+<span class="fc" id="L158">        int yDist = Math.abs(node.row - startNode.row);</span>
+<span class="fc" id="L159">        sum = xDist + yDist;</span>
+<span class="fc" id="L160">        node.gCost = sum;</span>
+        // H Cost
+<span class="fc" id="L162">        xDist = Math.abs(node.column - goalNode.column);</span>
+<span class="fc" id="L163">        yDist = Math.abs(node.row - goalNode.row);</span>
+<span class="fc" id="L164">        node.hCost = xDist + yDist;</span>
+        // F cost
+<span class="fc" id="L166">        node.fCost = node.gCost + node.hCost;</span>
+<span class="fc" id="L167">    }</span>
+
+    public boolean search() {
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">        while (!goalReached &amp;&amp; step &lt; 500) {</span>
+<span class="fc" id="L171">            int column = currentNode.column;</span>
+<span class="fc" id="L172">            int row = currentNode.row;</span>
+
+<span class="fc" id="L174">            currentNode.checked = true;</span>
+<span class="fc" id="L175">            openList.remove(currentNode);</span>
+
+<span class="fc" id="L177">            openAdjacentNodes(column, row);</span>
+
+<span class="fc bfc" id="L179" title="All 2 branches covered.">            if (!findBestNodeIndex()) {</span>
+<span class="fc" id="L180">                break;</span>
+            }
+
+<span class="fc" id="L183">            step++;</span>
+<span class="fc" id="L184">        }</span>
+<span class="fc" id="L185">        return goalReached;</span>
+    }
+
+    public void openAdjacentNodes(int column, int row) {
+        // Open the Up node
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (row - 1 &gt;= 0) {</span>
+<span class="fc" id="L191">            openNode(node[column][row - 1]);</span>
+        }
+        // Open the left node
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (column - 1 &gt;= 0) {</span>
+<span class="fc" id="L195">            openNode(node[column - 1][row]);</span>
+        }
+        // Open the down node
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if (row + 1 &gt;= 0) {</span>
+<span class="fc" id="L199">            openNode(node[column][row + 1]);</span>
+        }
+        // Open the right node
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">        if (column + 1 &gt;= 0) {</span>
+<span class="fc" id="L203">            openNode(node[column + 1][row]);</span>
+        }
+<span class="fc" id="L205">    }</span>
+
+    public boolean findBestNodeIndex() {
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">        if (openList.isEmpty()) {</span>
+<span class="nc" id="L209">            return false;</span>
+        }
+
+<span class="fc" id="L212">        int bestNodeIndex = 0;</span>
+<span class="fc" id="L213">        int bestNodefCost = Integer.MAX_VALUE;</span>
+
+<span class="fc bfc" id="L215" title="All 2 branches covered.">        for (int i = 0; i &lt; openList.size(); i++) {</span>
+<span class="fc" id="L216">            Node thisNode = openList.get(i);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">            if (thisNode.fCost &lt; bestNodefCost) {</span>
+<span class="fc" id="L218">                bestNodeIndex = i;</span>
+<span class="fc" id="L219">                bestNodefCost = thisNode.fCost;</span>
+<span class="fc bfc" id="L220" title="All 4 branches covered.">            } else if (thisNode.fCost == bestNodefCost &amp;&amp; thisNode.gCost &lt; openList.get(bestNodeIndex).gCost) {</span>
+<span class="fc" id="L221">                bestNodeIndex = i;</span>
+            }
+        }
+
+<span class="fc" id="L225">        currentNode = openList.get(bestNodeIndex);</span>
+<span class="fc" id="L226">        openList.remove(bestNodeIndex); // Optionally remove the node from open list</span>
+<span class="fc" id="L227">        return checkGoalReached();</span>
+    }
+
+    public boolean checkGoalReached() {
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (currentNode.equals(goalNode)) {</span>
+<span class="fc" id="L232">            goalReached = true;</span>
+<span class="fc" id="L233">            trackPath();</span>
+<span class="fc" id="L234">            return false;</span>
+        }
+<span class="fc" id="L236">        return true;</span>
+    }
+
+
+
+    public void openNode(Node node) {
+
+<span class="fc bfc" id="L243" title="All 6 branches covered.">        if (node.open == false &amp;&amp; node.checked == false &amp;&amp; node.solid == false) {</span>
+
+<span class="fc" id="L245">            node.open = true;</span>
+<span class="fc" id="L246">            node.parent = currentNode;</span>
+<span class="fc" id="L247">            openList.add(node);</span>
+        }
+<span class="fc" id="L249">    }</span>
+
+    public void trackPath() {
+<span class="fc" id="L252">        Node current = goalNode;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        while (current != startNode) {</span>
+<span class="fc" id="L254">            pathList.add(0, current);</span>
+<span class="fc" id="L255">            current = current.parent;</span>
+        }
+<span class="fc" id="L257">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

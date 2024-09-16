@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lighting.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Documents</a> &gt; <a href="index.source.html" class="el_package">Documents.environment</a> &gt; <span class="el_source">Lighting.java</span></div><h1>Lighting.java</h1><pre class="source lang-java linenums">package Documents.environment;
+
+import Documents.main.GamePanel;
+
+import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
+/**
+ * This class manages the lighting effects in the game by creating a dark filter
+ * with a radial gradient to simulate light around the main character.
+ */
+public class Lighting {
+    private GamePanel gamePanel;
+    private BufferedImage darkFilter;
+
+    /**
+     * Constructs a Lighting object with a specified GamePanel and circle size for the light.
+     *
+     * @param gamePanel the game panel where the lighting effect is applied
+     * @param circleSize the diameter of the circle of light
+     */
+<span class="fc" id="L25">    public Lighting(GamePanel gamePanel, int circleSize) {</span>
+<span class="fc" id="L26">        this.gamePanel = gamePanel;</span>
+
+        // Create buffered image
+<span class="fc" id="L29">        darkFilter = new BufferedImage(gamePanel.screenWidth, gamePanel.screenHeight, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L30">        Graphics2D g2 = darkFilter.createGraphics();</span>
+
+        // Define the screen area
+<span class="fc" id="L33">        Area screenArea = new Area(new Rectangle2D.Double(0, 0, gamePanel.screenWidth, gamePanel.screenHeight));</span>
+
+        // Center coordinates of the light circle
+<span class="fc" id="L36">        int centerX = gamePanel.mainCharacter.screenX + gamePanel.tileSize / 2;</span>
+<span class="fc" id="L37">        int centerY = gamePanel.mainCharacter.screenY + gamePanel.tileSize / 2;</span>
+
+        // Top-left coordinates of the circle
+<span class="fc" id="L40">        double x = centerX - circleSize / 2.0;</span>
+<span class="fc" id="L41">        double y = centerY - circleSize / 2.0;</span>
+
+        // Create and subtract the light circle from the screen area
+<span class="fc" id="L44">        Shape circleShape = new Ellipse2D.Double(x, y, circleSize, circleSize);</span>
+<span class="fc" id="L45">        screenArea.subtract(new Area(circleShape));</span>
+
+        // Define gradient properties
+<span class="fc" id="L48">        Color[] colors = {new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.25f), new Color(0, 0, 0, 0.5f),</span>
+                          new Color(0, 0, 0, 0.75f), new Color(0, 0, 0, 0.98f)};
+<span class="fc" id="L50">        float[] fractions = {0f, 0.25f, 0.5f, 0.75f, 1f};</span>
+<span class="fc" id="L51">        RadialGradientPaint gradientPaint = new RadialGradientPaint(centerX, centerY, circleSize / 2, fractions, colors);</span>
+
+<span class="fc" id="L53">        g2.setPaint(gradientPaint);</span>
+
+        // Fill the area with the gradient to simulate darkness with a lighter area
+<span class="fc" id="L56">        g2.fill(screenArea);</span>
+<span class="fc" id="L57">        g2.dispose();</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Draws the dark filter onto a given Graphics2D surface.
+     *
+     * @param g2 the graphics object used for drawing
+     */
+    public void draw(Graphics2D g2) {
+<span class="nc" id="L66">        g2.drawImage(darkFilter, 0, 0, null);</span>
+<span class="nc" id="L67">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

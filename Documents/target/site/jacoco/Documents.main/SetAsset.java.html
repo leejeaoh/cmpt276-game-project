@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SetAsset.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Documents</a> &gt; <a href="index.source.html" class="el_package">Documents.main</a> &gt; <span class="el_source">SetAsset.java</span></div><h1>SetAsset.java</h1><pre class="source lang-java linenums">package Documents.main;
+
+//list of object class
+import Documents.object.KeyCard;
+import Documents.object.Door;
+import Documents.object.Stair;
+
+import Documents.entity.Ghost;
+import Documents.entity.Demon;
+import Documents.object.Bloodstain;
+import Documents.object.Candy;
+
+
+/**
+ * The SetAsset class is responsible for initializing maze assets such as key cards and doors.
+ * It sets the world positions for these assets to be displayed in the maze.
+ */
+public class SetAsset {
+	/** The GamePanel instance associated with the set assets. */
+	GamePanel gp;
+
+	/**
+     * Constructs a SetAsset object with the specified GamePanel instance.
+     * @param gp The GamePanel instance to associate with the SetAsset object.
+     */
+<span class="fc" id="L26">	public SetAsset (GamePanel gp) {</span>
+<span class="fc" id="L27">		this.gp = gp;</span>
+
+<span class="fc" id="L29">	}</span>
+
+	/**
+     * Initializes the key cards and door objects in the game.
+     * Sets their world positions based on tile coordinates.
+     */
+	public void setObj() {
+<span class="fc" id="L36">		gp.obj[0] = new KeyCard(gp);</span>
+<span class="fc" id="L37">		gp.obj[0].worldX = 38 * gp.tileSize;</span>
+<span class="fc" id="L38">		gp.obj[0].worldY = 27 * gp.tileSize;</span>
+
+<span class="fc" id="L40">		gp.obj[1] = new KeyCard(gp);</span>
+<span class="fc" id="L41">		gp.obj[1].worldX = 19 * gp.tileSize;</span>
+<span class="fc" id="L42">		gp.obj[1].worldY = 5 * gp.tileSize;</span>
+
+<span class="fc" id="L44">		gp.obj[2] = new KeyCard(gp);</span>
+<span class="fc" id="L45">		gp.obj[2].worldX = 37 * gp.tileSize;</span>
+<span class="fc" id="L46">		gp.obj[2].worldY = 12* gp.tileSize;</span>
+
+<span class="fc" id="L48">		gp.obj[3] = new KeyCard(gp);</span>
+<span class="fc" id="L49">		gp.obj[3].worldX = 17 * gp.tileSize;</span>
+<span class="fc" id="L50">		gp.obj[3].worldY = 28* gp.tileSize;</span>
+
+<span class="fc" id="L52">		gp.obj[4] = new KeyCard(gp);</span>
+<span class="fc" id="L53">		gp.obj[4].worldX = 10 * gp.tileSize;</span>
+<span class="fc" id="L54">		gp.obj[4].worldY = 42 * gp.tileSize;</span>
+
+<span class="fc" id="L56">		gp.obj[5] = new KeyCard(gp);</span>
+<span class="fc" id="L57">		gp.obj[5].worldX = 14 * gp.tileSize;</span>
+<span class="fc" id="L58">		gp.obj[5].worldY = 40 * gp.tileSize;</span>
+
+<span class="fc" id="L60">		gp.obj[6] = new KeyCard(gp);</span>
+<span class="fc" id="L61">		gp.obj[6].worldX = 43 * gp.tileSize;</span>
+<span class="fc" id="L62">		gp.obj[6].worldY = 31* gp.tileSize;</span>
+
+<span class="fc" id="L64">		gp.obj[7] = new KeyCard(gp);</span>
+<span class="fc" id="L65">		gp.obj[7].worldX = 5 * gp.tileSize;</span>
+<span class="fc" id="L66">		gp.obj[7].worldY = 43* gp.tileSize;</span>
+
+
+		//door
+<span class="fc" id="L70">		gp.obj[8] = new Door(gp);</span>
+<span class="fc" id="L71">		gp.obj[8].worldX = 11 * gp.tileSize;</span>
+<span class="fc" id="L72">		gp.obj[8].worldY = 10* gp.tileSize;</span>
+
+		//start
+<span class="fc" id="L75">		gp.obj[9] = new Stair(gp);</span>
+<span class="fc" id="L76">		gp.obj[9].worldX = 11 * gp.tileSize;</span>
+<span class="fc" id="L77">		gp.obj[9].worldY = 9* gp.tileSize;</span>
+
+
+<span class="fc" id="L80">	}</span>
+
+
+	public void setGhost() { 
+<span class="fc" id="L84">		gp.monster[0] = new Ghost(gp);</span>
+<span class="fc" id="L85">		gp.monster[0].worldXPos = gp.tileSize*30 - gp.tileSize/2;</span>
+<span class="fc" id="L86">		gp.monster[0].worldYPos = gp.tileSize*30 - gp.tileSize/2;</span>
+<span class="fc" id="L87">		gp.monster[0].velocity = 1;</span>
+<span class="fc" id="L88">		gp.monster[1] = new Ghost(gp);</span>
+<span class="fc" id="L89">		gp.monster[1].worldXPos = gp.tileSize*10 - gp.tileSize/2;</span>
+<span class="fc" id="L90">		gp.monster[1].worldYPos = gp.tileSize*5 - gp.tileSize/2;</span>
+<span class="fc" id="L91">		gp.monster[1].velocity = 2;</span>
+<span class="fc" id="L92">	}</span>
+	
+	public void setTraps(){
+<span class="fc" id="L95">		gp.obj[10] = new Bloodstain(gp);</span>
+<span class="fc" id="L96">		gp.obj[10].worldX = 15*gp.tileSize;</span>
+<span class="fc" id="L97">		gp.obj[10].worldY = 23*gp.tileSize;</span>
+<span class="fc" id="L98">		gp.obj[11] = new Bloodstain(gp);</span>
+<span class="fc" id="L99">		gp.obj[11].worldX = 20*gp.tileSize;</span>
+<span class="fc" id="L100">		gp.obj[11].worldY = 13*gp.tileSize;</span>
+<span class="fc" id="L101">		gp.obj[12] = new Bloodstain(gp);</span>
+<span class="fc" id="L102">		gp.obj[12].worldX = 24*gp.tileSize;</span>
+<span class="fc" id="L103">		gp.obj[12].worldY = 16*gp.tileSize;</span>
+<span class="fc" id="L104">		gp.obj[13] = new Bloodstain(gp);</span>
+<span class="fc" id="L105">		gp.obj[13].worldX = 32*gp.tileSize;</span>
+<span class="fc" id="L106">		gp.obj[13].worldY = 6*gp.tileSize;</span>
+<span class="fc" id="L107">		gp.obj[14] = new Bloodstain(gp);</span>
+<span class="fc" id="L108">		gp.obj[14].worldX = 9*gp.tileSize;</span>
+<span class="fc" id="L109">		gp.obj[14].worldY = 34*gp.tileSize;</span>
+<span class="fc" id="L110">		gp.obj[15] = new Bloodstain(gp);</span>
+<span class="fc" id="L111">		gp.obj[15].worldX = 11*gp.tileSize;</span>
+<span class="fc" id="L112">		gp.obj[15].worldY = 35*gp.tileSize;</span>
+<span class="fc" id="L113">		gp.obj[16] = new Bloodstain(gp);</span>
+<span class="fc" id="L114">		gp.obj[16].worldX = 13*gp.tileSize;</span>
+<span class="fc" id="L115">		gp.obj[16].worldY = 34*gp.tileSize;</span>
+<span class="fc" id="L116">		gp.obj[17] = new Bloodstain(gp);</span>
+<span class="fc" id="L117">		gp.obj[17].worldX = 28*gp.tileSize;</span>
+<span class="fc" id="L118">		gp.obj[17].worldY = 40*gp.tileSize;</span>
+<span class="fc" id="L119">	}</span>
+
+	public void setReward(){
+<span class="fc" id="L122">		gp.obj[18] = new Candy(gp);</span>
+<span class="fc" id="L123">		gp.obj[18].worldX = 31*gp.tileSize;</span>
+<span class="fc" id="L124">		gp.obj[18].worldY = 6*gp.tileSize;</span>
+<span class="fc" id="L125">		gp.obj[19] = new Candy(gp);</span>
+<span class="fc" id="L126">		gp.obj[19].worldX = 43*gp.tileSize;</span>
+<span class="fc" id="L127">		gp.obj[19].worldY = 31*gp.tileSize;</span>
+<span class="fc" id="L128">		gp.obj[20] = new Candy(gp);</span>
+<span class="fc" id="L129">		gp.obj[20].worldX = 11*gp.tileSize;</span>
+<span class="fc" id="L130">		gp.obj[20].worldY = 43*gp.tileSize;</span>
+
+<span class="fc" id="L132">	}</span>
+
+	public void setDemon() {
+<span class="fc" id="L135">		gp.monster[2] = new Demon(gp);</span>
+<span class="fc" id="L136">		gp.monster[2].worldXPos = gp.tileSize*25 - gp.tileSize/2;</span>
+<span class="fc" id="L137">		gp.monster[2].worldYPos = gp.tileSize*18 - gp.tileSize/2;</span>
+<span class="fc" id="L138">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

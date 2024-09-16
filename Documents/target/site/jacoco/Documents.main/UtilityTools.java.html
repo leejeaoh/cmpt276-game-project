@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UtilityTools.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Documents</a> &gt; <a href="index.source.html" class="el_package">Documents.main</a> &gt; <span class="el_source">UtilityTools.java</span></div><h1>UtilityTools.java</h1><pre class="source lang-java linenums">package Documents.main;
+
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+
+/**
+ * the class contains utility methods to aid in image manipulation and sprite animation
+ *  */
+
+<span class="fc" id="L10">public class UtilityTools {</span>
+	/**
+     * Scales an image to the specified width and height.
+     *
+     * @param original is original BufferedImage to be scaled
+     * @param width is target width for the scaled image
+     * @param height is target height for the scaled image
+     * @return is new BufferedImage object that is the result of scaling the original image to the specified width and height
+     */
+	public BufferedImage scaleImg(BufferedImage original, int width, int height) {
+<span class="fc" id="L20">		BufferedImage scaledImg = new BufferedImage(width, height, original.getType());</span>
+<span class="fc" id="L21">		Graphics2D g2 = scaledImg.createGraphics();</span>
+<span class="fc" id="L22">		g2.drawImage(original, 0, 0, width, height, null);</span>
+<span class="fc" id="L23">		g2.dispose();</span>
+
+<span class="fc" id="L25">		return scaledImg;</span>
+	}
+
+	/**
+     * Deprecated. use {@link #updateSpriteAnimation(int, int, int)} for flexible frame reset settings
+     * calculates and updates the sprite animation frame number based on the current count
+     *
+     * @param spriteCount is current frame count before update
+     * @param spriteNum is current sprite number 
+     * @return the updated sprite number after checking if a reset condition based on the frame count is met
+     */
+	@Deprecated
+	public static int spriteCountCalculations(int spriteCount, int spriteNum) {
+<span class="fc" id="L38">		spriteCount++;</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		if (spriteCount &gt; 10) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">			spriteNum = (spriteNum == 1) ? 2 : 1;</span>
+<span class="fc" id="L41">			spriteCount = 0; // Reset the sprite count</span>
+		}
+<span class="fc" id="L43">		return spriteNum; // Return the updated sprite number</span>
+	}
+
+	/**
+     * Updates the sprite animation counters.
+     * 
+     * @param spriteCount the current frame count for the sprite
+     * @param spriteNum the current sprite number
+     * @param resetFrame the frame count at which to reset 
+     * @return an array where the first element is the updated spriteCount and the second element is the updated spriteNum
+     */
+    public static int[] updateSpriteAnimation(int spriteCount, int spriteNum, int resetFrame) {
+<span class="fc" id="L55">        spriteCount++;</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (spriteCount &gt; resetFrame) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            spriteNum = (spriteNum == 1) ? 2 : 1;</span>
+<span class="nc" id="L58">            spriteCount = 0; // Reset the sprite count</span>
+        }
+<span class="fc" id="L60">        return new int[] { spriteCount, spriteNum };</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

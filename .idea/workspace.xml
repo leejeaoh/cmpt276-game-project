@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="429e0caf-3d24-4887-86c5-f36778f6c207" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/entity/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/entity/Entity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/entity/MainCharacter.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/entity/MainCharacter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/main/CollisionCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/main/CollisionCheck.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/main/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/main/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/main/KeyControl.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/main/KeyControl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/main/SetAsset.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/main/SetAsset.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/main/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/main/Sound.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/main/UserInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/main/UserInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/object/Door.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/object/Door.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/object/KeyCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/object/KeyCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/object/ObjectFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/object/ObjectFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/tile/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/tile/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/classes/Documents/tile/TileFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/classes/Documents/tile/TileFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/target/test-classes/AppTest.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2eQU9LeqZEqmO5Zlzm1Hy5i1IY5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/ryanmitchellin/Desktop/CMPT 276/assignments/MAZE GAME/CMPT276S24_group20"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="429e0caf-3d24-4887-86c5-f36778f6c207" name="Changes" comment="" />
+      <created>1711836142884</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711836142884</updated>
+    </task>
+    <servers />
+  </component>
+</project>

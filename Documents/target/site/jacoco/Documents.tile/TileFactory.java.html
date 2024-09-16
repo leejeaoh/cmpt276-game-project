@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TileFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Documents</a> &gt; <a href="index.source.html" class="el_package">Documents.tile</a> &gt; <span class="el_source">TileFactory.java</span></div><h1>TileFactory.java</h1><pre class="source lang-java linenums">package Documents.tile;
+
+import Documents.main.GamePanel;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.BufferedReader;
+
+/**
+ * Factory class for creating and managing tiles in the maze.
+ */
+public class TileFactory {
+	/** The GamePanel instance associated with the tile factory. */
+	GamePanel gp;
+
+    /** Array for the tiles. */
+	Tile[] tiles;
+
+    /** 2D array for the tile map. */
+	public int[][] tileMapNum;
+<span class="fc" id="L24">	boolean drawPath = true;</span>
+
+	/**
+     * Constructs a TileFactory object with the specified GamePanel.
+     * @param gp The GamePanel instance.
+     */
+<span class="fc" id="L30">	public TileFactory(GamePanel gp) {</span>
+<span class="fc" id="L31">		this.gp = gp;</span>
+<span class="fc" id="L32">		tiles = new Tile[50];</span>
+<span class="fc" id="L33">		tileMapNum = new int[gp.maxWCol][gp.maxWRow];</span>
+
+<span class="fc" id="L35">		gettingTileImg();</span>
+<span class="fc" id="L36">		loadingMap(&quot;/maps/map01.txt&quot;);</span>
+<span class="fc" id="L37">	}</span>
+
+	/**
+     * Loads tile images from resources folder.
+     */
+	public void gettingTileImg() {
+<span class="fc" id="L43">		setup(0, &quot;voidspace&quot;, false);</span>
+<span class="fc" id="L44">		setup(1, &quot;rightsideWallEnd&quot;, true);</span>
+<span class="fc" id="L45">		setup(2, &quot;blueFloor&quot;, false);</span>
+<span class="fc" id="L46">		setup(3, &quot;upWallRight&quot;, true);</span>
+<span class="fc" id="L47">		setup(4, &quot;orangeWallRight&quot;, true);</span>
+<span class="fc" id="L48">		setup(5, &quot;leftsideWallEnd&quot;, true);</span>
+<span class="fc" id="L49">		setup(6, &quot;cornerRightBottomToUp&quot;, true);</span>
+<span class="fc" id="L50">		setup(7, &quot;bottomWallCenter&quot;, true);</span>
+<span class="fc" id="L51">		setup(8, &quot;connector1&quot;, true);</span>
+<span class="fc" id="L52">		setup(9, &quot;connector2&quot;, true);</span>
+<span class="fc" id="L53">		setup(10, &quot;blueWallCenter&quot;, true);</span>
+<span class="fc" id="L54">		setup(11, &quot;blueWallLeft&quot;, true);</span>
+<span class="fc" id="L55">		setup(12, &quot;upWallCen&quot;, true);</span>
+<span class="fc" id="L56">		setup(13, &quot;roomFloor&quot;, false);</span>
+<span class="fc" id="L57">		setup(14, &quot;leftsideWall&quot;, true);</span>
+<span class="fc" id="L58">		setup(15, &quot;orangeWallCenter&quot;, true);</span>
+<span class="fc" id="L59">		setup(16, &quot;blueWallRight&quot;, true);</span>
+<span class="fc" id="L60">		setup(17, &quot;upWallLeft&quot;, true);</span>
+<span class="fc" id="L61">		setup(18, &quot;orangeWallLeft&quot;, true);</span>
+<span class="fc" id="L62">		setup(19, &quot;grayFloor&quot;, false);</span>
+<span class="fc" id="L63">		setup(20, &quot;rightsideWall&quot;, true);</span>
+<span class="fc" id="L64">		setup(21, &quot;cornerLeftBottomToup&quot;, true);</span>
+
+		
+<span class="fc" id="L67">	}</span>
+	public void setup(int i, String imgPath,boolean collision) {
+		try {
+<span class="fc" id="L70">			tiles[i] = new Tile();</span>
+<span class="fc" id="L71">		    BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream(&quot;/tiles/&quot; + imgPath + &quot;.png&quot;));</span>
+		    //ensure the image supports alpha (transparency)
+<span class="fc" id="L73">		    BufferedImage newImg = new BufferedImage(gp.tileSize, gp.tileSize, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L74">		    Graphics2D g2 = newImg.createGraphics();</span>
+<span class="fc" id="L75">		    g2.drawImage(originalImage, 0, 0, gp.tileSize, gp.tileSize, null);</span>
+<span class="fc" id="L76">		    g2.dispose();</span>
+<span class="fc" id="L77">		    tiles[i].image = newImg;</span>
+<span class="fc" id="L78">		    tiles[i].collision = collision;</span>
+<span class="nc" id="L79">		} catch(IOException e) {</span>
+<span class="nc" id="L80">			e.printStackTrace();</span>
+<span class="fc" id="L81">		}</span>
+<span class="fc" id="L82">	}</span>
+
+	/**
+     * Loads a map from a text file.
+     * @param fileName The name of the file containing the map.
+     */
+	public void loadingMap(String fileName) throws IllegalArgumentException {
+		try {
+<span class="fc" id="L90">			InputStream is = getClass().getResourceAsStream(fileName);</span>
+<span class="fc" id="L91">			BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
+
+<span class="fc" id="L93">			int column = 0;</span>
+<span class="fc" id="L94">			int row = 0;</span>
+
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">			while(column &lt; gp.maxWCol &amp;&amp; row &lt; gp.maxWRow) {</span>
+<span class="fc" id="L97">				String line = br.readLine();//read a line of .txt</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">				while(column &lt; gp.maxWCol) {</span>
+					//splitting line and getting tile type number from .txt
+<span class="fc" id="L101">					String numbers[] = line.split(&quot; &quot;);</span>
+					//convert string to number
+<span class="fc" id="L103">					int num = Integer.parseInt(numbers[column]);</span>
+
+<span class="fc" id="L105">					tileMapNum[column][row] = num;</span>
+<span class="fc" id="L106">					column++;</span>
+<span class="fc" id="L107">				}</span>
+				//only accept max number of col that is preset in gamepanel
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				if(column == gp.maxWCol) {</span>
+<span class="fc" id="L110">					column = 0;</span>
+					//go to next row if the col is maxed
+<span class="fc" id="L112">					row++;</span>
+				}
+<span class="fc" id="L114">			}	</span>
+
+
+<span class="fc" id="L117">		}catch(Exception e) {</span>
+			//failed to read text file for map
+<span class="fc" id="L119">			throw new IllegalArgumentException(&quot;The map has not loaded correctly&quot;);</span>
+<span class="fc" id="L120">		}</span>
+<span class="fc" id="L121">	}</span>
+
+    /**
+     * Gets a tile at the specified index.
+     * @param index The index of the tile.
+     * @return The tile at the specified index.
+     */
+    public Tile getTile(int index) {
+<span class="fc" id="L129">        return tiles[index];</span>
+    }
+
+	/**
+     * Gets the tile map number at the specified column and row.
+     * @param col The column index.
+     * @param row The row index.
+     * @return The tile map number at the specified column and row.
+     */
+    public int getTileMapNum(int col, int row) {
+<span class="fc" id="L139">        return tileMapNum[col][row];</span>
+    }
+
+	/**
+     * Draws the tiles inside the maze.
+     * @param g2 The graphics context.
+     */
+	public void draw(Graphics2D g2) {
+<span class="nc" id="L147">		int column = 0;</span>
+<span class="nc" id="L148">		int row = 0;</span>
+
+<span class="nc bnc" id="L150" title="All 4 branches missed.">		while(column &lt; gp.maxWCol &amp;&amp; row &lt; gp.maxWRow) {</span>
+			//extracting tile map number which stored in tileMapNum[0][0]
+			//use this as index for type of tile that needs to be printed on the map
+<span class="nc" id="L153">			int tileNum = tileMapNum[column][row];</span>
+
+<span class="nc" id="L155">			int worldX = column * gp.tileSize;</span>
+<span class="nc" id="L156">			int worldY = row * gp.tileSize;</span>
+<span class="nc" id="L157">			int screenX = worldX - gp.mainCharacter.worldXPos + gp.mainCharacter.screenX;</span>
+<span class="nc" id="L158">			int screenY = worldY - gp.mainCharacter.worldYPos + gp.mainCharacter.screenY;</span>
+
+			//checking if the tile is within the boundary
+<span class="nc bnc" id="L161" title="All 8 branches missed.">			if(worldX + gp.tileSize &gt; gp.mainCharacter.worldXPos - gp.mainCharacter.screenX &amp;&amp;</span>
+			   worldX - gp.tileSize &lt; gp.mainCharacter.worldXPos + gp.mainCharacter.screenX &amp;&amp;
+			   worldY + gp.tileSize &gt; gp.mainCharacter.worldYPos - gp.mainCharacter.screenY &amp;&amp;
+			   worldY - gp.tileSize &lt; gp.mainCharacter.worldYPos + gp.mainCharacter.screenY) {
+<span class="nc" id="L165">				g2.drawImage(tiles[tileNum].image, screenX, screenY, null);</span>
+			}
+<span class="nc" id="L167">			column++;</span>
+
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			if(column == gp.maxWCol) {</span>
+<span class="nc" id="L170">				column = 0;</span>
+<span class="nc" id="L171">				row++;</span>
+			}
+
+<span class="nc" id="L174">		}</span>
+<span class="nc" id="L175">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
